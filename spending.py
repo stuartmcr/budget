@@ -2,17 +2,6 @@
 
 import csv
 
-print("---spending analysis---")
-
-with open('2018_data.csv', 'r') as csv_2018_Data:
-    csv_reader = csv.reader(csv_2018_Data)
-
-    next(csv_reader)
-
-    for line in csv_reader:
-        print(line[3])
-
-
 # 0: Date
 # 1: Description
 # 2: Category
@@ -27,3 +16,13 @@ with open('2018_data.csv', 'r') as csv_2018_Data:
 # 11: Week
 # 12: Transaction ID
 # 13: Date Added
+
+print("---spending analysis---")
+
+with open('2018_data.csv', 'r') as csv_2018_Data:
+    csv_reader = csv.reader(csv_2018_Data)
+
+    next(csv_reader) # removes header row
+
+    for line in csv_reader:
+        print(line[3])
