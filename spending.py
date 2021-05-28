@@ -1,5 +1,3 @@
-# pull in csv data with transactions
-
 import csv
 
 # 0: Date
@@ -19,10 +17,17 @@ import csv
 
 print("---spending analysis---")
 
-with open('2018_data.csv', 'r') as csv_2018_Data:
-    csv_reader = csv.reader(csv_2018_Data)
+outfile = open('2020_cleaned.csv', 'w')
+with open('2020_data.csv', 'r') as csv_2020:
+    reader_2020 = csv.reader(csv_2020, delimiter=',')
+    header = next(reader_2020)
 
-    next(csv_reader) # removes header row
+    for row in reader_2020:
+        date = row[0]
+        description = row[1]
+        category = row[2]
+        amount = row[3]
 
-    for line in csv_reader:
-        print(line[3])
+        line = '{},{},{},{}\n'.format(date, description, category, amount)
+        outfile.write(line)
+outfile.close()
