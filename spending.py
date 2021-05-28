@@ -29,3 +29,10 @@ import csv
 
 with open('2018.csv', 'r') as infile:
     reader = csv.reader(infile, delimiter = ',')
+
+    grocery_spending = 0.0
+    for row in reader:
+        if row[2] == 'Groceries':
+            grocery_spending = grocery_spending + float(row[3])
+
+print(grocery_spending)
