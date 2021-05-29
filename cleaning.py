@@ -17,12 +17,12 @@ import csv
 
 print("---spending analysis---")
 
-outfile = open('2020_cleaned.csv', 'w')
-with open('raw_data/2020_data.csv', 'r') as csv_2020:
-    reader_2020 = csv.reader(csv_2020, delimiter=',')
-    header = next(reader_2020)
+outfile = open('cleaned_2018.csv', 'w')
+with open('raw_data/2018_data.csv', 'r') as csv_2018:
+    reader_2018 = csv.reader(csv_2018, delimiter=',')
+    header = next(reader_2018)
 
-    for row in reader_2020:
+    for row in reader_2018:
         date = row[0]
         description = row[1]
         category = row[2]

@@ -1,38 +1,30 @@
-import csv
+import sqlite3
 
-""" spending categories:
+#create and connect to database
+conn = sqlite3.connect('test.db')
 
----NECESSARY---
-1.) Groceries
-2.) Rent
-3.) Utilities
-4.) Transportation
-5.) Medical
-6.) Education
-7.) Phone
-8.) Piper (dog)
+#create cursor to execute commands
+c = conn.cursor()
 
----DISCRETIONARY---
-1.) Restaurants
-2.) Drinks
-3.) Holidays
-4.) Fitness
-5.) Hobbies
-6.) Clothes
-7.) Home Improvements
-8.) Subscriptions
-9.) Gifts
-10.) Extra
+#create table to hold info
+'''
+c.execute("""CREATE TABLE spending (
+    month text,
+    description text,
+    category text,
+    amount integer
+    )""")
+'''
 
-"""
+#c.execute("INSERT INTO spending VALUES('January', 'Potbellys', 'Food', 7)")
+#conn.commit()
 
+c.execute("SELECT * FROM spending WHERE category='Food'")
 
-with open('2018.csv', 'r') as infile:
-    reader = csv.reader(infile, delimiter = ',')
+print(c.fetchall())
 
-    grocery_spending = 0.0
-    for row in reader:
-        if row[2] == 'Groceries':
-            grocery_spending = grocery_spending + float(row[3])
+#commits current transaction
+conn.commit()
 
-print(grocery_spending)
+#close connection
+conn.close()
