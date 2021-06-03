@@ -9,7 +9,6 @@ conn = sqlite3.connect(':memory:')
 c = conn.cursor()
 
 #create table to hold info
-
 c.execute("""CREATE TABLE spending (
     month text,
     description text,
@@ -26,7 +25,6 @@ def get_expense_by_type(category_type):
     c.execute("SELECT * FROM spending WHERE category=:category", {'category': category_type})
     return c.fetchall()
 
-
 def update_cost(exp, amount):
     with conn:
         c.execute("""Update spending SET amount = :amount WHERE month = :month AND category = :category""", {'month': exp.month, 'category': exp.category, 'amount': amount})
@@ -35,39 +33,25 @@ def remove_expense(exp):
     with conn:
         c.execute("""DELETE from spending WHERE month = :month AND category = :category""", {'month': exp.month, 'category':exp.category})
 
-
 # Transaction: Month, Description, Category, Amount
 exp_1 = Transaction('March', 'Pizza', 'Food', 12)
 exp_2 = Transaction('March', 'Fifa Game', 'Hobbies', 60)
 
+# Add expenses
 insert_expense(exp_1)
 insert_expense(exp_2)
 
+# Display by category
 expenses = get_expense_by_type('Food')
 print(expenses)
 
+# Edit expense amount and remove another
 update_cost(exp_1, 9)
 remove_expense(exp_2)
 
+# Display updated value
 expenses = get_expense_by_type('Food')
 print(expenses)
 
-conn.close()
-
-# c.execute("INSERT INTO spending VALUES(?, ?, ?, ?)", (exp_1.month, exp_1.description, exp_1.category, exp_1.amount))
-# conn.commit()
-
-# c.execute("INSERT INTO spending VALUES(:month, :description, :category, :amount)", {'month': exp_2.month, 'description': exp_2.description, 'category': exp_2.category, 'amount': exp_2.amount})
-# conn.commit()
-
-# c.execute("SELECT * FROM spending WHERE category=?", ('Food',))
-# print(c.fetchall())
-
-# c.execute("SELECT * FROM spending WHERE category=:category", {'category': 'Hobbies'})
-# print(c.fetchall())
-
-# commits current transaction
-# conn.commit()
-
 # close connection
-# conn.close()
+conn.close()
